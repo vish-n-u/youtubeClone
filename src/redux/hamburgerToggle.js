@@ -8,9 +8,11 @@ const hamburgerToggle = createSlice({
   },
   reducers: {
     changeToggleState: (state) => {
+      console.log("change toggle was called");
       state.isToggleOpen = !state.isToggleOpen;
     },
     collapseToggle: (state) => {
+      console.log("collapse toggle was called");
       if (state.isToggleOpen == true) state.isToggleOpen = false;
     },
   },

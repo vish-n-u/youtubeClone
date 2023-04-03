@@ -23,9 +23,11 @@ const Comments = ({ Id }) => {
   }, [id]);
 
   return comments?.length == 0 ? null : comments?.length == undefined ? (
-    <div className="flex justify-center mt-10">Disabled comments</div>
+    <div className="flex invisible lg:visible md:visible justify-center mt-1 lg:-mt-10">
+      Disabled comments
+    </div>
   ) : (
-    <div className="mt-3 mb-4  ml-2  ">
+    <div className="mt-3 mb-4   ml-2  ">
       <h1 className="font-semibold text-xl mb-6">Comments</h1>
       <div className="flex flex-col ml-8">
         {comments.map((comment) => {

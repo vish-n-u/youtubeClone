@@ -18,18 +18,26 @@ const Tags = ({ setSelectedTag, selectedTag }) => {
     "Cr7",
     "Career ",
     "Tifo",
+    "Tifo1",
+    "Leo Messi1",
+    "Sparta",
+    "tags",
+    "Childrens cartoon",
+    "Cr7",
+    "Career ",
+    "Tifo",
   ];
 
   return (
     <div
       id="tags"
-      className="flex  w-full invisible md:invisible lg:visible  h-14 m-2 p-2 "
+      className="flex   w-full invisible md:invisible lg:visible  h-14 m-2 p-2 "
     >
       {arr.map((content) => {
         return (
           <span
             className={
-              "flex items-center pr-3 pl-3 pt-4 pb-4 m-2 w-auto  text-sm font-normal hover:opacity-80 bg-blue-100 rounded-lg cursor-pointer " +
+              "flex items-center px-3  py-5 m-2 w-auto  text-sm font-normal hover:opacity-80 bg-blue-100 rounded-lg cursor-pointer " +
               (selectedTag == content ? "bg-black text-white" : "")
             }
             onClick={() => {

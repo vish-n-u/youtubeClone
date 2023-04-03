@@ -18,13 +18,13 @@ const MainBodyContent = () => {
   }, [selectedTag]);
   return (
     <div className="flex-col w-full z-10">
-      <Tags setSelectedTag={setSelectedTag} selectedTag={selectedTag} />
+      {/* <Tags setSelectedTag={setSelectedTag} selectedTag={selectedTag} /> */}
       {Object.keys(vids).length == 0 ? (
         <div className=" m-4 flex flex-wrap justify-start rounded-lg">
           <ShimmerUi />
         </div>
       ) : (
-        <div className="lg:flex-row flex-wrap flex flex-col justify-center">
+        <div className="lg:flex-row md:flex-row flex-wrap flex flex-col justify-center">
           <MainVideoComponentPage
             vidDetails={vids}
             searchQueryCharacters={selectedTag}

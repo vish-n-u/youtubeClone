@@ -1,21 +1,39 @@
 import { useSelector } from "react-redux";
+import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { collapseToggle } from "./redux/hamburgerToggle";
 
 const SideBar = () => {
-  const dispatch = useDispatch();
+  const sideBarRef = useRef();
+  const Dispatch = useDispatch();
   const isToggleOpen = useSelector((store) => store.toggle.isToggleOpen);
+  useEffect(() => {
+    console.log("yup getting called....");
+    let handler = (e) => {
+      // if (window.innerWidth > 766) return;
+      if (!isToggleOpen) return;
+      if (sideBarRef.current == null) return;
+      setTimeout(() => {
+        console.log("mouseDown handler is called");
+        if (!sideBarRef?.current?.contains(e.target))
+          Dispatch(collapseToggle());
+      }, 200);
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
   return (
     <>
       {isToggleOpen && (
         // changed div , new div added
 
         <div
-          onBlur={() => {
-            dispatch(collapseToggle);
-          }}
-          className="  overflow-auto fixed lg:relative  container bg-white h-screen w-1/5 scrollbar z-50 rounded-lg md:w-2/5 lg:w-1/5 "
+          ref={sideBarRef}
+          className="  overflow-auto fixed lg:relative md:relative  container bg-white h-screen w-3/5 scrollbar z-50 rounded-lg md:w-2/5 lg:w-1/5 "
         >
           <div className="flex flex-col border-b-2 items-center    border-gray-200  p-4 m-5 ">
             <Link to="/">

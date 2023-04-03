@@ -4,23 +4,24 @@ import { addData } from "./redux/searchCache";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+let arr = ["jam", "bread", "peanut-butter", "yakuza", "vhirma", "dmsk"];
 async function getData(searchQuery, Dispatch, searchSuggestion) {
   if (searchSuggestion.obj.lruObj[searchQuery]) {
-    Dispatch(
-      addData({ [searchQuery]: searchSuggestion.obj.lruObj[searchQuery] })
-    );
+    console.log("returned from searching");
     return;
   }
+  try {
+    const data = await fetch(
+      "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=" +
+        searchQuery
+    );
 
-  const data = await fetch(
-    "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=" +
-      searchQuery
-  );
+    const jsonData = await data.json();
 
-  const jsonData = await data.json();
-
-  Dispatch(addData({ [searchQuery]: jsonData[1] }));
+    Dispatch(addData({ [searchQuery]: jsonData[1] }));
+  } catch (err) {
+    return;
+  }
 }
 
 const Header = () => {
@@ -29,6 +30,8 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isInputTagFocused, setInputTagIsFocused] = useState(false);
   const searchSuggestion = useSelector((store) => store.searchCache);
+  const toggleState = useSelector((store) => store.toggle);
+  console.log(toggleState);
 
   function handleKey(event) {
     // If the user presses the "Enter" key on the keyboard
@@ -52,15 +55,22 @@ const Header = () => {
       clearTimeout(timer);
     };
   }, [searchQuery]);
-
+  console.log("header function called");
   return (
     <div className="h-24 w-screen flex flex-row justify-between items-center top-0 sticky z-20 bg-slate-50 shadow-lg">
-      <img
-        onClick={() => changeToggle()}
+      <button
         className="m-2  ml-4  lg:-mr-8 p-2 pl-2 h-10 w-10 cursor-pointer"
-        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACECAMAAABmmnOVAAAAPFBMVEX///8AAADPz8/f39/T09Pv7++5ubn09PQ3NzeBgYHX19dxcXEODg6YmJh0dHQ8PDzJyclZWVkvLy+Hh4dzYEMPAAABHElEQVR4nO3aWQ6DMAyEYQxlX7rd/64tlfpk4K3DVPq/E4yEieMkRQEAAAAAUvVQCgz1QYRq7KYQmLqx2sswKwJ8zdsZFmWGiGUrQ6PNENHkDO1VHeLaphA3dYaIWwrR60P0KcRdH+LuGeKpD/H0LMz2oc7wyL+oxWIlr4pcER8ODezdymUrVr/byld1JXC0pwEAAH+vuggc7miGUXJGEjGNw14Ghz2meCTO43DhMXe0nTpElyewUp0hojy7IlYckuyHsPgcFoVp8YtaLFYey7ZHA/No5avzNzUAAODfnX/p4nD95LDHdLiSdJg7LK6pLS7sT5jKc1VYnE9YhLA4JLEoTIvHXhaLlccDQI8G5vEotLB4HgsAAAAAP/ACOSEhx/zSpj4AAAAASUVORK5CYII="
-        alt="menu"
-      ></img>
+        onClick={() => {
+          console.log("toggle click", toggleState);
+          changeToggle();
+        }}
+      >
+        <img
+          className
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACECAMAAABmmnOVAAAAPFBMVEX///8AAADPz8/f39/T09Pv7++5ubn09PQ3NzeBgYHX19dxcXEODg6YmJh0dHQ8PDzJyclZWVkvLy+Hh4dzYEMPAAABHElEQVR4nO3aWQ6DMAyEYQxlX7rd/64tlfpk4K3DVPq/E4yEieMkRQEAAAAAUvVQCgz1QYRq7KYQmLqx2sswKwJ8zdsZFmWGiGUrQ6PNENHkDO1VHeLaphA3dYaIWwrR60P0KcRdH+LuGeKpD/H0LMz2oc7wyL+oxWIlr4pcER8ODezdymUrVr/byld1JXC0pwEAAH+vuggc7miGUXJGEjGNw14Ghz2meCTO43DhMXe0nTpElyewUp0hojy7IlYckuyHsPgcFoVp8YtaLFYey7ZHA/No5avzNzUAAODfnX/p4nD95LDHdLiSdJg7LK6pLS7sT5jKc1VYnE9YhLA4JLEoTIvHXhaLlccDQI8G5vEotLB4HgsAAAAAP/ACOSEhx/zSpj4AAAAASUVORK5CYII="
+          alt="menu"
+        ></img>
+      </button>
       <a href="/">
         <img
           className="m-2 -ml-3 md:-ml-5 lg:-ml-8 p-2  h-[70px] "
@@ -91,28 +101,25 @@ const Header = () => {
           <Link to={"/search?q=" + searchQuery}> 🥃</Link>
         </span>
 
-        {searchQuery.length > 0 &&
-          isInputTagFocused &&
-          searchSuggestion.obj.lruObj?.[searchQuery]?.data?.[searchQuery]
-            .length > 1 && (
-            <div className="flex  flex-col justify-center w-[43%] rounded-lg shadow-xl mr-14 mt-12 fixed bg-white">
-              {searchSuggestion.obj.lruObj?.[searchQuery]?.data?.[
-                searchQuery
-              ]?.map((item) => {
-                return (
-                  <h1
-                    className="p-1 m-1 cursor-pointer"
-                    onClick={() => {
-                      setSearchQuery(item);
-                      setInputTagIsFocused(false);
-                    }}
-                  >
-                    <Link to={"/search?q=" + item}>{item}</Link>
-                  </h1>
-                );
-              })}
-            </div>
-          )}
+        {searchQuery.length > 0 && isInputTagFocused && (
+          <div className="flex  flex-col justify-center lg:w-[43%] md:w-[43%] w-screen rounded-lg shadow-xl mr-14 mt-12 fixed bg-white">
+            {searchSuggestion.obj.lruObj?.[searchQuery]?.data?.[
+              searchQuery
+            ]?.map((item) => {
+              return (
+                <h1
+                  className="p-1 m-1 cursor-pointer"
+                  onClick={() => {
+                    setSearchQuery(item);
+                    setInputTagIsFocused(false);
+                  }}
+                >
+                  <Link to={"/search?q=" + item}>{item}</Link>
+                </h1>
+              );
+            })}
+          </div>
+        )}
       </div>
       <img
         className=" h-[20px] w-[20px] mr-5"
