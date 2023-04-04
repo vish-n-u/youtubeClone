@@ -59,21 +59,21 @@ const Header = () => {
   return (
     <div className="h-24 w-screen flex flex-row justify-between items-center top-0 sticky z-20 bg-slate-50 shadow-lg">
       <button
-        className="m-2  ml-4  lg:-mr-8 p-2 pl-2 h-10 w-10 cursor-pointer"
+        className="m-2  lg:ml-10  lg:-mr-8 p-2 pl-2 h-10 w-10 cursor-pointer"
         onClick={() => {
           console.log("toggle click", toggleState);
           changeToggle();
         }}
       >
         <img
-          className
+          className=""
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACECAMAAABmmnOVAAAAPFBMVEX///8AAADPz8/f39/T09Pv7++5ubn09PQ3NzeBgYHX19dxcXEODg6YmJh0dHQ8PDzJyclZWVkvLy+Hh4dzYEMPAAABHElEQVR4nO3aWQ6DMAyEYQxlX7rd/64tlfpk4K3DVPq/E4yEieMkRQEAAAAAUvVQCgz1QYRq7KYQmLqx2sswKwJ8zdsZFmWGiGUrQ6PNENHkDO1VHeLaphA3dYaIWwrR60P0KcRdH+LuGeKpD/H0LMz2oc7wyL+oxWIlr4pcER8ODezdymUrVr/byld1JXC0pwEAAH+vuggc7miGUXJGEjGNw14Ghz2meCTO43DhMXe0nTpElyewUp0hojy7IlYckuyHsPgcFoVp8YtaLFYey7ZHA/No5avzNzUAAODfnX/p4nD95LDHdLiSdJg7LK6pLS7sT5jKc1VYnE9YhLA4JLEoTIvHXhaLlccDQI8G5vEotLB4HgsAAAAAP/ACOSEhx/zSpj4AAAAASUVORK5CYII="
           alt="menu"
         ></img>
       </button>
       <a href="/">
         <img
-          className="m-2 -ml-3 md:-ml-5 lg:-ml-8 p-2  h-[70px] "
+          className="m-2   p-2  h-[70px] "
           src="https://th.bing.com/th/id/OIP._IfEaUssjZQwZ1u92b1_GgHaEK?w=329&h=185&c=7&r=0&o=5&dpr=1.3&pid=1.7"
           alt="logo"
         ></img>

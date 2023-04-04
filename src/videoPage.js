@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { collapseToggle } from "./redux/hamburgerToggle";
 import { useEffect, useState } from "react";
 import Comments from "./comments";
+import SideBar from "./SideBar";
 import SideBarVids from "./sideBarVids";
 
 async function getData(ids) {
@@ -29,29 +30,34 @@ const VideoPage = () => {
   let vidDetail = allVids[ids];
 
   useEffect(() => {
-    sideBar();
-    if (!vidDetail) {
-      vidDetail = getData(ids);
-    }
+    // sideBar();
+    // if (!vidDetail) {
+    //   vidDetail = getData(ids);
+    // }
   }, []);
 
   return (
-    <div className="flex justify-between w-screen h-auto bg-blue-200 flex-col lg:flex-row">
-      <div className="flex flex-col w-screen h-auto  bg-green-200 ml-10 p-2 ">
-        <div className="h-screen  bg-red-500">
-          <iframe
-            className="lg:w-4/5 lg:h-3/5 md:w-[500] md:h-[250] w-screen"
-            src={"https://www.youtube.com/embed/" + ids}
-            controls
-          ></iframe>
-          <h1 className="mt-5 text-xl mb-2    font-bold">
-            {vidDetail?.snippet?.title}
-          </h1>
-        </div>
+    <div className="flex justify-between w-screen h-screen  flex-col lg:flex-row">
+      <div className="w-full flex h-screen">
+        <div className="flex flex-col w-3/5 h-screen p-2 ">
+          <div className=" w-full ml-10 h-4/5 flex flex-col">
+            <iframe
+              className="lg:mr-10 lg:w-full lg:h-[500] md:w-full md:h-[350] w-screen"
+              src={"https://www.youtube.com/embed/" + ids}
+              controls
+            ></iframe>
 
-        <Comments Id={ids} />
+            <h1 className="mt-5 text-xl mb-2    font-bold">
+              {vidDetail?.snippet?.title}
+            </h1>
+          </div>
+
+          <Comments Id={ids} />
+        </div>
+        <div className="w-2/5  ml-10">
+          <SideBarVids ids={ids} />
+        </div>
       </div>
-      <SideBarVids ids={ids} />
     </div>
   );
 };

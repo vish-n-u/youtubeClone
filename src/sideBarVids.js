@@ -1,29 +1,37 @@
 import { Link } from "react-router-dom";
 import store from "./redux/store";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addQueryVids } from "./redux/queryVids";
-async function getData(Dispatch) {
+import { addVids } from "./redux/allVids";
+async function getData(Dispatch, setAllVids) {
   console.log("Allvids getData");
   let data = await fetch(
     `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&key=AIzaSyCJZ67zUfAuhY4qDe8ZM_NpwoffdM8w8vs`
   );
   const jsonData = await data.json();
+  console.log("jsonData:---", jsonData);
 
-  Dispatch(addQueryVids(jsonData));
-  return jsonData;
+  setAllVids(jsonData.items);
+  Dispatch(addVids(jsonData.items));
 }
 
 const SideBarVids = ({ ids }) => {
-  let allVids = useSelector((store) => store.allVids.item);
+  let [allVids, setAllVids] = useState(
+    useSelector((store) => store.allVids.item)
+  );
+
   const Dispatch = useDispatch();
   useEffect(() => {
-    allVids = getData(Dispatch);
+    console.log("-----", Object.keys(allVids).length);
+    if (Object.keys(allVids).length == 0) {
+      getData(Dispatch, setAllVids);
+    }
   }, []);
   console.log("allVids==", allVids);
 
   return (
-    <div className=" m-4 w-5/12  ">
+    <div className=" m-4 w-full  ">
       {Object.keys(allVids).map((vid) => {
         if (vid == ids) return;
         return (
@@ -36,10 +44,11 @@ const SideBarVids = ({ ids }) => {
               ></img>
               <div className="flex flex-col ml-2">
                 <span className="p-1 font-medium text-sm overflow-y-clip h-12">
-                  {allVids[vid]?.snippet.localized.title}
+                  {allVids[vid]?.snippet?.localized?.title ||
+                    allVids[vid]?.snippet?.title}
                 </span>
                 <span className="">
-                  {viewCount(allVids[vid]?.statistics.viewCount)} views
+                  {viewCount(allVids[vid]?.statistics?.viewCount)} views
                 </span>
               </div>
             </div>
