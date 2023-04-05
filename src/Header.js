@@ -57,7 +57,7 @@ const Header = () => {
   }, [searchQuery]);
   console.log("header function called");
   return (
-    <div className="h-24 w-screen flex flex-row justify-between items-center top-0 sticky z-20 bg-slate-50 shadow-lg">
+    <div className="h-24 w-screen flex flex-row justify-between items-center top-0 sticky z-30 bg-slate-50 shadow-lg">
       <button
         className="m-2  lg:ml-10  lg:-mr-8 p-2 pl-2 h-10 w-10 cursor-pointer"
         onClick={() => {
@@ -98,7 +98,9 @@ const Header = () => {
           }}
           className="bg-slate-200 flex items-center align-middle justify-center md:px-4 lg:px-5 p-1 pr-3 rounded-r-full hover:cursor-pointer"
         >
-          <Link to={"/search?q=" + searchQuery}> 🥃</Link>
+          <Link to={"/search?q=" + searchQuery}>
+            <h1>🔍</h1>
+          </Link>
         </span>
 
         {searchQuery.length > 0 && isInputTagFocused && (

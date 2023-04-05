@@ -30,7 +30,7 @@ const VideoPage = () => {
   let vidDetail = allVids[ids];
 
   useEffect(() => {
-    // sideBar();
+    sideBar();
     // if (!vidDetail) {
     //   vidDetail = getData(ids);
     // }

@@ -33,7 +33,7 @@ const SideBar = () => {
 
         <div
           ref={sideBarRef}
-          className="  overflow-auto fixed lg:relative md:relative  container bg-white h-screen w-full scrollbar z-25 rounded-lg md:w-2/5 lg:w-1/5 "
+          className="shadow-2xl    fixed lg:relative md:relative   bg-white h-screen w-4/5 scrollbar z-20 rounded-lg md:w-2/5 lg:w-1/5 "
         >
           <div className="flex flex-col border-b-2 items-center    border-gray-200  p-4 m-5 ">
             <Link to="/">
