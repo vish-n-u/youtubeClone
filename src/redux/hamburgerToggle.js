@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Action } from "@remix-run/router";
+
 
 const hamburgerToggle = createSlice({
   name: "toggle",

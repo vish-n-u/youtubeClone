@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Youtube Clone",
   "scripts": {
-    "start": "index.html",
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Vishnu",
@@ -22,6 +23,6 @@
     "tailwind-scrollbar": "^2.1.0",
     "tailwindcss": "^3.2.7"
   },
-  "main": "new.js",
+
   "keywords": []
 }
