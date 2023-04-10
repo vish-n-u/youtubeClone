@@ -5,7 +5,7 @@ const ShimmerUi = () => {
     return (
       <>
         <div
-          key={index}
+          key={x}
           className="h-48 w-80 m-2 rounded-lg  border-2 border-black bg-slate-200"
         ></div>
       </>

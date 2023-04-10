@@ -4,6 +4,16 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { collapseToggle } from "./redux/hamburgerToggle";
 
+function getWidth() {
+  return Math.max(
+    document.body.scrollWidth,
+    document.documentElement.scrollWidth,
+    document.body.offsetWidth,
+    document.documentElement.offsetWidth,
+    document.documentElement.clientWidth
+  );
+}
+
 const SideBar = () => {
   const sideBarRef = useRef();
   const Dispatch = useDispatch();
@@ -16,7 +26,8 @@ const SideBar = () => {
       if (sideBarRef.current == null) return;
       setTimeout(() => {
         console.log("mouseDown handler is called");
-        if (!sideBarRef?.current?.contains(e.target))
+        console.log(getWidth());
+        if (!sideBarRef?.current?.contains(e.target) && getWidth() < 648)
           Dispatch(collapseToggle());
       }, 200);
     };
@@ -33,7 +44,7 @@ const SideBar = () => {
 
         <div
           ref={sideBarRef}
-          className="shadow-2xl    fixed lg:relative md:relative   bg-white h-screen w-4/5 scrollbar z-20 rounded-lg md:w-2/5 lg:w-1/5 "
+          className="shadow-2xl    fixed lg:relative md:relative   bg-white h-screen w-2/5 scrollbar z-20 rounded-lg md:w-2/5 lg:w-1/5 "
         >
           <div className="flex flex-col border-b-2 items-center    border-gray-200  p-4 m-5 ">
             <Link to="/">

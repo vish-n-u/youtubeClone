@@ -3,8 +3,8 @@ import { changeToggleState } from "./redux/hamburgerToggle";
 import { addData } from "./redux/searchCache";
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-let arr = ["jam", "bread", "peanut-butter", "yakuza", "vhirma", "dmsk"];
+import { Link, Navigate, useNavigate } from "react-router-dom";
+
 async function getData(searchQuery, Dispatch, searchSuggestion) {
   if (searchSuggestion.obj.lruObj[searchQuery]) {
     console.log("returned from searching");
@@ -31,17 +31,15 @@ const Header = () => {
   const [isInputTagFocused, setInputTagIsFocused] = useState(false);
   const searchSuggestion = useSelector((store) => store.searchCache);
   const toggleState = useSelector((store) => store.toggle);
+  const navigate = useNavigate();
   console.log(toggleState);
 
-  function handleKey(event) {
+  function handleKey(event, data) {
     // If the user presses the "Enter" key on the keyboard
-    console.log("reached", event, event.key);
+    console.log("reached", data, event, event.key);
     if (event.key === "Enter") {
-      {
-        console.log(true);
-        setSearchQuery(searchQuery);
-        console.log(true, searchQuery);
-      }
+      navigate("/search?q=" + event.target.value);
+      setInputTagIsFocused(false);
     }
   }
 
@@ -55,11 +53,12 @@ const Header = () => {
       clearTimeout(timer);
     };
   }, [searchQuery]);
+  useEffect(() => {});
   console.log("header function called");
   return (
     <div className="h-24 w-screen flex flex-row justify-between items-center top-0 sticky z-30 bg-slate-50 shadow-lg">
       <button
-        className="m-2  lg:ml-10  lg:-mr-8 p-2 pl-2 h-10 w-10 cursor-pointer"
+        className="m-2  lg:ml-10  lg:-mr-8 p-2 pl-2 h-10 w-10 cursor-pointer hover:bg-slate-300 hover:rounded-full"
         onClick={() => {
           console.log("toggle click", toggleState);
           changeToggle();
@@ -80,6 +79,7 @@ const Header = () => {
       </a>
       <div className=" justify-center mr-5 w-9/12 flex">
         <input
+          id="searchBar"
           className="  border-5 pl-7 h-10 rounded-l-full border-gray-700 w-7/12"
           value={searchQuery}
           onFocus={() => {
@@ -90,6 +90,7 @@ const Header = () => {
             setSearchQuery(data);
             setInputTagIsFocused(true);
           }}
+          onKeyDown={handleKey}
         ></input>
         {searchQuery && <Link to={`/search?q=${searchQuery}`}></Link>}
         <span
@@ -109,15 +110,17 @@ const Header = () => {
               searchQuery
             ]?.map((item) => {
               return (
-                <h1
-                  className="p-1 m-1 cursor-pointer"
-                  onClick={() => {
-                    setSearchQuery(item);
-                    setInputTagIsFocused(false);
-                  }}
-                >
-                  <Link to={"/search?q=" + item}>{item}</Link>
-                </h1>
+                <Link to={"/search?q=" + item}>
+                  <h1
+                    className="p-1 m-1 cursor-pointer"
+                    onClick={() => {
+                      setSearchQuery(item);
+                      setInputTagIsFocused(false);
+                    }}
+                  >
+                    {item}
+                  </h1>
+                </Link>
               );
             })}
           </div>

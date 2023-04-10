@@ -40,7 +40,7 @@ async function getData(Dispatch, ids) {
   );
 
   const jsonData = await data.json();
-
+  console.log("queryVids JsonData", jsonData);
   jsonData.key = ids;
   Dispatch(addQueryVids(jsonData));
 }

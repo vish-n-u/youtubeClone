@@ -33,19 +33,27 @@ const MainVideoComponentPage = ({ vidDetails, searchQueryCharacters, col }) => {
   const queryVids = useSelector((store) => store.queryVids.item);
   const Dispatch = useDispatch();
   let isToggleOpen = useSelector((store) => store.toggle.isToggleOpen);
-  isToggleOpen = !isToggleOpen;
+
   console.log("istoggleOpen", isToggleOpen, getWidth());
-
+  let width = getWidth();
   useEffect(() => {
-    function fixScroll() {
-      if (!isToggleOpen && getWidth() < 768) scrollTo(0, 0);
+    console.log("useEffect:", isToggleOpen);
+    function fixScroll(isToggleOpen) {
+      console.log("log----", isToggleOpen, isToggleOpen && getWidth() < 768);
+      if (isToggleOpen && getWidth() < 768) scrollTo(0, 0);
     }
-    addEventListener("scroll", fixScroll);
-    return () => {
-      removeEventListener("scroll", fixScroll);
-    };
-  });
 
+    addEventListener("scroll", () => {
+      console.log("-----=", isToggleOpen, "=====------");
+      fixScroll(isToggleOpen);
+    });
+    return () => {
+      removeEventListener("scroll", () => {
+        fixScroll();
+      });
+    };
+  }, [getWidth(), isToggleOpen]);
+  console.log(width);
   return (
     <>
       {Object.keys(vidDetails).map((vidId) => {
@@ -55,7 +63,7 @@ const MainVideoComponentPage = ({ vidDetails, searchQueryCharacters, col }) => {
             className={`w-screen  ${
               col ? "lg:-mt-10" : null
             } lg:h-72 lg:w-80 lg:m-3  lg:my-5 md:m-2 md:h-52 md:w-60 my-1   ${
-              !isToggleOpen && getWidth() < 768 ? "opacity-30" : null
+              isToggleOpen && getWidth() < 648 ? "opacity-30" : null
             }`}
           >
             <Link
@@ -80,7 +88,7 @@ const MainVideoComponentPage = ({ vidDetails, searchQueryCharacters, col }) => {
               <div
                 className={
                   col
-                    ? "flex flex-col  md:flex-row lg:flex-row justify-center align-middle items-center content-center  w-screen "
+                    ? "flex flex-col  md:flex-row lg:flex-row lg:justify-start  justify-center align-middle items-center content-center  w-screen "
                     : "flex-col flex justify-center align-middle items-center"
                 }
               >
@@ -92,8 +100,8 @@ const MainVideoComponentPage = ({ vidDetails, searchQueryCharacters, col }) => {
                 <div
                   className={
                     col
-                      ? "flex flex-col justify-center items-center -mt-5 md:pt-5 lg:pt-5 h-36 w-screen mx-2 lg:justify-start lg:items-start md:justify-start md:items-start   "
-                      : "mx-3"
+                      ? "flex flex-col justify-center items-center -mt-10 md:pt-5 lg:pt-5 h-36 w-[400px] mx-2 lg:justify-start lg:items-start md:justify-start md:items-start   "
+                      : "mx-3 lg:w-full md:w-full w-[400px] justify-center items-center"
                   }
                 >
                   <h1 className="p-1 font-semibold">
@@ -101,7 +109,10 @@ const MainVideoComponentPage = ({ vidDetails, searchQueryCharacters, col }) => {
                       vidDetails[vidId]?.snippet?.title}
                   </h1>
                   <h1 className="ml-2">
-                    {viewCount(vidDetails[vidId]?.statistics?.viewCount)} views
+                    {!col
+                      ? viewCount(vidDetails[vidId]?.statistics?.viewCount)
+                      : vidDetails[vidId]?.statistics?.description}{" "}
+                    {col ? "" : "views"}
                   </h1>
                 </div>
               </div>
