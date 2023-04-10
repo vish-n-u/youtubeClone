@@ -3,15 +3,15 @@ import { render, createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useSelector } from "react-redux";
-import SearchPage1 from "./searchSuggestionPage";
+import SearchPage1 from "./src/searchSuggestionPage";
 
-import Header from "./Header";
-import Body from "./Body";
-import store from "./redux/store";
+import Header from "./src/Header";
+import Body from "./src/Body";
+import store from "./src/redux/store";
 import { Outlet } from "react-router-dom";
-import MainBodyContent from "./mainBodyComponent";
-import VideoPage from "./videoPage";
-import Example from "./use";
+import MainBodyContent from "./src/mainBodyComponent";
+import VideoPage from "./src/videoPage";
+import Example from "./src/use";
 
 const AppLayout = () => {
   return (
