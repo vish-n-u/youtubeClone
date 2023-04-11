@@ -23,7 +23,7 @@ const Comments = ({ Id }) => {
   }, [id]);
 
   return comments?.length == 0 ? null : comments?.length == undefined ? (
-    <div className="flex text-lg font-semibold lg:visible md:visible justify-center mt-1 lg:-mt-10">
+    <div className="flex text-lg font-semibold lg:visible md:visible justify-center md:mt-3 mt-1 lg:mt-5">
       Disabled comments
     </div>
   ) : (
