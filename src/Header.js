@@ -115,7 +115,7 @@ const Header = () => {
         </span>
 
         {searchQuery.length > 0 && isInputTagFocused && (
-          <div className="flex  flex-col justify-center lg:w-[43%] md:w-[43%] w-screen rounded-lg shadow-xl mr-14 mt-12 fixed bg-white">
+          <div className="flex  flex-col justify-center lg:w-[43%] md:w-[43%] sm:w-[43%] rounded-lg shadow-xl mr-14 mt-12 fixed bg-white">
             {searchSuggestion.obj.lruObj?.[searchQuery]?.data?.[
               searchQuery
             ]?.map((item) => {

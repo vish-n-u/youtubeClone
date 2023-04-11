@@ -22,7 +22,7 @@ const SearchPage1 = () => {
       {!vids[ids] || Object.keys(vids[ids]).length == 0 ? (
         <ShimmerUi />
       ) : (
-        <div className="flex flex-col mx-4 align-middle flex-wrap mt-10">
+        <div className="flex flex-col lg:mx-4 md:mx-4 align-middle flex-wrap mt-10">
           <MainVideoComponentPage
             vidDetails={vids[ids]}
             searchQueryCharacters={ids}

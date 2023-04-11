@@ -36,24 +36,24 @@ const MainVideoComponentPage = ({ vidDetails, searchQueryCharacters, col }) => {
 
   console.log("istoggleOpen", isToggleOpen, getWidth());
   let width = getWidth();
-  useEffect(() => {
-    console.log("useEffect:", isToggleOpen);
-    function fixScroll(isToggleOpen) {
-      console.log("log----", isToggleOpen, isToggleOpen && getWidth() < 768);
-      if (isToggleOpen && getWidth() < 768) scrollTo(0, 0);
-    }
+  // useEffect(() => {
+  //   console.log("useEffect:", isToggleOpen);
+  //   function fixScroll(isToggleOpen) {
+  //     console.log("log----", isToggleOpen, isToggleOpen && getWidth() < 768);
+  //     if (isToggleOpen && getWidth() < 768) scrollTo(0, 0);
+  //   }
 
-    addEventListener("scroll", () => {
-      console.log("-----=", isToggleOpen, "=====------");
-      fixScroll(isToggleOpen);
-    });
-    return () => {
-      removeEventListener("scroll", () => {
-        fixScroll();
-      });
-    };
-  }, [getWidth(), isToggleOpen]);
-  console.log(width);
+  //   addEventListener("scroll", () => {
+  //     console.log("-----=", isToggleOpen, "=====------");
+  //     fixScroll(isToggleOpen);
+  //   });
+  //   return () => {
+  //     removeEventListener("scroll", () => {
+  //       fixScroll();
+  //     });
+  //   };
+  // }, [getWidth(), isToggleOpen]);
+  // console.log(width);
   return (
     <>
       {Object.keys(vidDetails).map((vidId) => {
@@ -104,11 +104,11 @@ const MainVideoComponentPage = ({ vidDetails, searchQueryCharacters, col }) => {
                       : "mx-3 lg:w-full md:w-full w-[400px] justify-center items-center"
                   }
                 >
-                  <h1 className="p-1 font-semibold">
+                  <h1 className="p-1 font-semibold mx-4">
                     {vidDetails[vidId].snippet?.localized?.title ||
                       vidDetails[vidId]?.snippet?.title}
                   </h1>
-                  <h1 className="ml-2">
+                  <h1 className="mx-4 text-green-400">
                     {!col
                       ? viewCount(vidDetails[vidId]?.statistics?.viewCount)
                       : vidDetails[vidId]?.statistics?.description}{" "}

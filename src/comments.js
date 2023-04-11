@@ -23,30 +23,30 @@ const Comments = ({ Id }) => {
   }, [id]);
 
   return comments?.length == 0 ? null : comments?.length == undefined ? (
-    <div className="flex invisible lg:visible md:visible justify-center mt-1 lg:-mt-10">
+    <div className="flex text-lg font-semibold lg:visible md:visible justify-center mt-1 lg:-mt-10">
       Disabled comments
     </div>
   ) : (
-    <div className="mt-3 mb-4   ml-2  ">
-      <h1 className="font-semibold text-xl mb-6">Comments</h1>
-      <div className="flex flex-col ml-8">
+    <div className="mt-3 mb-4    ">
+      <h1 className="font-semibold text-xl mb-9 ml-2">Comments</h1>
+      <div className="flex flex-col lg:ml-8 md:ml-8 m-0 lg:w-full md:w-full w-screen ">
         {comments.map((comment) => {
           return (
-            <div key={comment.id} className="mb-4">
+            <div key={comment.id} className="mb-4 ml-4">
               <div className="flex">
                 <img
-                  className="h-7 w-7 rounded-full mt-3 m-1"
+                  className="h-7 w-7 rounded-full mt-3 m-0 md:m-1 lg:m-1"
                   src={
                     comment.snippet.topLevelComment.snippet
                       .authorProfileImageUrl
                   }
                   alt="userIcon"
                 ></img>
-                <h1 className="p-2 m-1 font-medium">
+                <h1 className="p-2 md:m-1 lg:m-1 m-0 font-medium">
                   {comment.snippet.topLevelComment.snippet.authorDisplayName}
                 </h1>
               </div>
-              <h1 className="p-1 ml-7  text-sm">
+              <h1 className="lg:p-1 md:p-1 p-0 mx-2 ml-7  text-sm">
                 {comment.snippet.topLevelComment.snippet.textOriginal}
               </h1>
               <div className="flex ml-9 -mt-1">
@@ -58,7 +58,7 @@ const Comments = ({ Id }) => {
                     {comment.snippet.topLevelComment.snippet.likeCount}
                   </span>
                 </div>
-                <span className="ml-5 flex justify centre items-center hover:bg-gray-200 hover:rounded-full px-3 p-1">
+                <span className="ml-5 flex justify centre items-center hover:bg-gray-200 hover:rounded-full lg:px-3 md:px-3 p-1">
                   👎
                 </span>
                 <span className="ml-5 my-2 font-semibold hover:bg-gray-200 hover:rounded-full py-2 px-4 ">
@@ -106,7 +106,7 @@ const Comments = ({ Id }) => {
 
               {showAllNestedComments[comment.id] == undefined ||
               isNestedCommentsOpen[comment.id] == false ? null : (
-                <div className="flex flex-col ml-16 ">
+                <div className="flex flex-col lg:ml-16 md:ml-16 ">
                   {showAllNestedComments[comment.id].items.map(
                     (innerComment) => {
                       return (
@@ -118,7 +118,7 @@ const Comments = ({ Id }) => {
                           <div className="flex flex-row">
                             <img
                               src={innerComment.snippet.authorProfileImageUrl}
-                              className="h-5 w-5 rounded-full mr-3"
+                              className="h-5 w-5 rounded-full lg:mr-3 md:mr-3"
                               alt="userImg"
                             ></img>
                             <span className="font-medium">

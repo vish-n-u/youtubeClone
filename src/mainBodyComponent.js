@@ -25,7 +25,7 @@ const MainBodyContent = () => {
     <div className="flex-col w-full flex justify-center align-middle items-center content-center flex-nowrap">
       {/* <Tags setSelectedTag={setSelectedTag} selectedTag={selectedTag} /> */}
       {Object.keys(vids).length == 0 ? (
-        <div className=" m-4 flex flex-wrap justify-start rounded-lg">
+        <div className=" my-4 flex flex-wrap justify-start rounded-lg">
           <ShimmerUi />
         </div>
       ) : (

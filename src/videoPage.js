@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Comments from "./comments";
 import SideBar from "./SideBar";
 import SideBarVids from "./sideBarVids";
+import { getWidth } from "./utils/constant";
 
 async function getData(ids) {
   console.log("reached");
@@ -17,11 +18,13 @@ async function getData(ids) {
 }
 
 const VideoPage = () => {
+  const [isCommentsOn, setIsCommentsOn] = useState(false);
+  const [isSeuggestionsOn, setIsSuggestionsOn] = useState(false);
   const Dispatch = useDispatch();
 
   const [id] = useSearchParams();
   let allVids = useSelector((store) => store.allVids.item);
-  const queryVids = useSelector((store) => store.queryVids.item);
+  //const queryVids = useSelector((store) => store.queryVids.item);
   const ids = id.get("v");
   const sideBar = () => Dispatch(collapseToggle());
 
@@ -38,24 +41,80 @@ const VideoPage = () => {
 
   return (
     <div className="flex justify-between w-screen h-screen  flex-col lg:flex-row">
-      <div className="w-full flex h-screen">
-        <div className="flex flex-col w-3/5 h-screen p-2 ">
-          <div className=" w-full ml-10 h-4/5 flex flex-col">
+      <div className="w-full flex lg:flex-row md:flex-row flex-col h-screen">
+        <div className="flex flex-col w-3/5  md:p-2 lg:p-2 ">
+          <div className=" w-full lg:ml-10 md:ml-10  flex flex-col ">
             <iframe
-              className="lg:mr-10 lg:w-full lg:h-[500] md:w-full md:h-[350] w-screen"
+              className="lg:mr-10 lg:w-full md:aspect-video lg:aspect-video  m-0 md:w-full aspect-video  w-screen"
               src={"https://www.youtube.com/embed/" + ids}
               controls
             ></iframe>
 
-            <h1 className="mt-5 text-xl mb-2    font-bold">
+            <h1 className="mt-5 sm text-xl mb-2 w-screen md:w-full lg:w-full   font-bold">
               {vidDetail?.snippet?.title}
             </h1>
           </div>
+          {getWidth() < 640 ? (
+            isCommentsOn ? (
+              <button
+                className="flex font-bold justify-center  w-screen"
+                onClick={() => {
+                  setIsCommentsOn(false);
+                }}
+              >
+                hide comments
+              </button>
+            ) : (
+              <button
+                className="flex font-bold justify-center  w-screen"
+                onClick={() => {
+                  setIsCommentsOn(true);
+                }}
+              >
+                show comments
+              </button>
+            )
+          ) : null}
 
-          <Comments Id={ids} />
+          {getWidth() > 640 ? (
+            <Comments Id={ids} />
+          ) : isCommentsOn ? (
+            <Comments Id={ids} />
+          ) : (
+            ""
+          )}
         </div>
-        <div className="w-2/5  ml-10">
-          <SideBarVids ids={ids} />
+
+        <div className="w-2/5     lg:ml-10 md:ml-10">
+          {getWidth() < 640 ? (
+            isSeuggestionsOn ? (
+              <button
+                className="flex justify-center mt-10 font-bold w-screen"
+                onClick={() => {
+                  setIsSuggestionsOn(false);
+                }}
+              >
+                hide suggestions
+              </button>
+            ) : (
+              <button
+                className="flex justify-center  w-screen font-bold mt-5"
+                onClick={() => {
+                  setIsSuggestionsOn(true);
+                }}
+              >
+                show suggestions
+              </button>
+            )
+          ) : null}
+
+          {getWidth() > 640 ? (
+            <SideBarVids ids={ids} />
+          ) : isSeuggestionsOn ? (
+            <SideBarVids ids={ids} />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

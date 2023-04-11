@@ -31,19 +31,22 @@ const SideBarVids = ({ ids }) => {
   console.log("allVids==", allVids);
 
   return (
-    <div className=" m-4 w-full  ">
+    <div className="w-screen lg:w-full md:w-full  ">
       {Object.keys(allVids).map((vid) => {
         if (vid == ids) return;
         return (
           <Link to={"/watch?v=" + vid}>
-            <div key={vid} className="  m-2 mt-5  flex">
+            <div
+              key={vid}
+              className=" mt-5 lg:ml-5 md:ml-5  md:overflow-x-auto flex-col   md:flex-row lg:flex-row flex"
+            >
               <img
-                className="rounded-lg h-20 w-32 "
+                className="rounded-lg lg:h-20 lg:w-32 md:h-20 md:w-32 w-screen "
                 src={allVids[vid]?.snippet.thumbnails.medium.url}
                 alt="title.jpg"
               ></img>
               <div className="flex flex-col ml-2">
-                <span className="p-1 font-medium text-sm overflow-y-clip h-12">
+                <span className="p-1 font-medium text-sm md:overflow-y-clip h-12">
                   {allVids[vid]?.snippet?.localized?.title ||
                     allVids[vid]?.snippet?.title}
                 </span>
