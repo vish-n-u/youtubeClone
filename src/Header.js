@@ -12,14 +12,24 @@ async function getData(searchQuery, Dispatch, searchSuggestion) {
   }
   try {
     const data = await fetch(
-      "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=" +
+      "https://clients1.google.com/complete/search?client=youtube&gs_ri=youtube&ds=yt&q=" +
         searchQuery
     );
 
-    const jsonData = await data.json();
+    const textData = await data.text();
+    console.log("---++--", textData);
+    let searchSuggestions = [];
+    textData.split("[").forEach((ele, index) => {
+      if (!ele.split('"')[1] || index === 1) return;
+      return searchSuggestions.push(ele.split('"')[1]);
+    });
 
-    Dispatch(addData({ [searchQuery]: jsonData[1] }));
+    searchSuggestions = searchSuggestions.splice(0, 9);
+    console.log(searchSuggestions);
+
+    Dispatch(addData({ [searchQuery]: searchSuggestions }));
   } catch (err) {
+    console.log(err);
     return;
   }
 }
